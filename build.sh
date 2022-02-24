@@ -1,6 +1,6 @@
 output_path="./output"
 
-export CROSS_COMPILE="/home/danil_e71/Tizen/toolchain/bin/arm-linux-gnueabi-"
+export CROSS_COMPILE="/home/danil_e71/tizen/arm-linux-gnueabi/bin/arm-linux-gnueabi-"
 
 export ARCH=arm
 export TARGET_ARCH=arm
@@ -17,14 +17,15 @@ build_kernel()
 
 	#make clean
 
-	make ${makeflags}  msm8916_defconfig VARIANT_DEFCONFIG=tizen_serranovelte_defconfig
+	make ${makeflags} tizen_serranovelte_defconfig
 
-	make ${makeflags} -j4
+	make ${makeflags} -j16
 
-	mv output/arch/arm/boot/zImage output/arch/arm/boot/boot.img-kernel
+	make ${makeflags} -j16 dtbs
 
-	./dtbtool -o output/arch/arm/boot/boot.img-dt -s 2048 -p output/scripts/dtc/ output/arch/arm/boot/dts/
+	mv output/arch/arm/boot/zImage output/arch/arm/boot/kernel
 
+	./dtbtool -o output/arch/arm/boot/dt.img -p output/scripts/dtc/ -v output/arch/arm/boot/dts/
 }
 
 build_kernel
