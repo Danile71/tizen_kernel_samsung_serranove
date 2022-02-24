@@ -17,11 +17,11 @@ build_kernel()
 
 	#make clean
 
-	make ${makeflags} tizen_serranovelte_defconfig
+	make ${makeflags} msm8916_sec_defconfig VARIANT_DEFCONFIG=tizen_serranovelte_defconfig
 
 	make ${makeflags} -j16
 
-	make ${makeflags} -j16 dtbs
+	make ${makeflags} -j16 dtbs modules
 
 	mv output/arch/arm/boot/zImage output/arch/arm/boot/kernel
 
